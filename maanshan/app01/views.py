@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,reverse
 
 # Create your views here.
 
@@ -51,6 +51,7 @@ def login(request):
 
 
 def article_deatil(request,year,day,month):
+    print(type(year))
     return HttpResponse(year+'-'+month+'-'+day)
 
 
@@ -58,4 +59,12 @@ def article_deatil(request,year,day,month):
 #
 #     return HttpResponse(year+month+day)
 
+# from django.urls import reverse
+def index(request):
+    return HttpResponse(reverse("app01:index"))
 
+
+
+def path_year(request,year):
+    print(type(year))
+    return HttpResponse("path_year")

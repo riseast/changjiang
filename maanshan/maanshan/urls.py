@@ -26,7 +26,8 @@ urlpatterns = [
     #分发
     # path('login/',views.login),
     #正则匹配
-    re_path(r'app01/',include("app01.urls")),
+    re_path(r'app01/',include(("app01.urls","app01"))),  #namespace 命名空间
+    re_path(r'app02/',include(('app02.urls',"app02"))),
 ]
 
 
