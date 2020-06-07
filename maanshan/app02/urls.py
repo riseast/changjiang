@@ -3,7 +3,6 @@
 
 from django.urls import path,re_path
 
-
 from app02 import views
 
 urlpatterns = [
@@ -11,7 +10,7 @@ urlpatterns = [
     # path('dt/', views.dt),
     # re_path(r'^articles/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<day>[0-9]{2})/$', views.article_deatil),
     # re_path(r'^articles/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<day>[0-9]{2})/$', views.article_detail),
-    path(r'index/',views.index,name="index")
+    path('index/',views.index,name="index"),
 ]
 
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponse,reverse
 
 # Create your views here.
-
+from app01.models import ebook
 
 import time
 import datetime
@@ -68,3 +68,53 @@ def index(request):
 def path_year(request,year):
     print(type(year))
     return HttpResponse("path_year")
+
+
+def test_path(request):
+
+    path = request.get_full_path()
+    print(path)
+    return render(request,'index.html',{'path1':path})
+
+
+
+#过滤器
+
+def date_t(request):
+    now = datetime.datetime.now()
+
+    return render(request,'index.html',{'now1':now})
+
+from django import template
+register=template.Library()
+
+
+
+
+
+@register.filter
+def chenfa(x,y):
+    return x*y
+
+
+def insert(request):
+    #方式1
+    #添加表记录
+    # book_obj=ebook(id=1,tile='python',price=100,pub_date="2020-03-01",publish="人民出版社")
+    # book_obj.save()
+
+    #方式2
+    #对于自增字段，如果执行过程中未执行成功，自增字段会跳过
+    # ebook_obj=ebook.objects.create(tile='go',price=201,pub_date="2020-03-01",publish="北京出版社")
+    # print(ebook.id)
+    # print(ebook.price)
+    # print(ebook.tile)
+    # return HttpResponse("OK")
+
+    # book_list=ebook.objects.all()
+    # print(book_list)
+    # book_list=ebook.objects.filter(price=100)
+    # print(book_list)
+    ret=ebook.objects.all().order_by("price")
+    print(ret)
+    return HttpResponse("Ok")

@@ -25,7 +25,7 @@ SECRET_KEY = 'jtue#w#q(uv3*b8m0xdsqm5&%)%96r=v_y0+^&u!x+bg^saviz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,10 +75,21 @@ WSGI_APPLICATION = 'maanshan.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'web',
+        'USER': 'boyang',
+        'PASSWORD': 'riseast',
+        'HOST': '192.168.12.19',
+        'PORT': '3306',
     }
 }
 
@@ -125,5 +136,25 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,"statics")
 ]
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handers': ['console'],
+            'propagete': True,
+            'level': 'DEBUG',
+        },
+    }
+}
+
 
 
