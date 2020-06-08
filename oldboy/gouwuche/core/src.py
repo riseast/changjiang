@@ -5,7 +5,9 @@ import json
 import os
 from conf import settings
 from interface import user_interface
-
+from lib import common
+from interface import bank_interface
+login_user = None
 # 1.注册功能
 def register():
     while True:
@@ -40,15 +42,35 @@ def login():
         flag,msg = user_interface.login_interface(username,password)
         if flag:
             print(msg)
+            global login_user
+            login_user = username
             break
         else:
             print(msg)
 # 3.查看余额
+@common.login_auth
 def check_blance():
-    pass
+    balance = user_interface.check_balance(login_user)
+    print(f'用户[{login_user}] 帐户余额为: {balance}')
+
 # 4.提现功能
+@common.login_auth
 def withdraw():
-    pass
+    while True:
+        # 让用户输入提现金额
+        input_money = input('请输入提现金额:')
+        # 判断用户输入的金额是否是数字
+        if not input_money.isdigit():
+            print('请重新输入')
+            continue
+        # 用户输入的提现金额，将提现金额交付给接口层来处理
+        flag,msg = bank_interface.withdraw_interface(login_user,input_money)
+        if flag:
+            print(msg)
+            break
+        else:
+            print(msg)
+
 # 5.还款功能
 def repay():
     pass

@@ -16,6 +16,7 @@ def register_interface(username,password,balance):
     if user_dic:
         # return  (False,'用户名已存在!')
         return False, '用户名已存在!'
+    password = common.get_pwd_md5(password)
     # 3,组织用户的数据字典信息
     user_dic = {
         'username': username,
@@ -56,13 +57,26 @@ def register_interface(username,password,balance):
         json.dump(user_dic, f1, ensure_ascii=False)
 
 def login_interface(username,password):
-    user_dic = db_handler.select(username)
     # 先查看当前用户数据是否存在
+    # {用户数据字典} or None
+    user_dic = db_handler.select(username)
+    # 用于判断用户是否存在
     if user_dic:
-        # password = common.get_pwd_md5(password)
+        # 给用户输入的密码做加密
+        password = common.get_pwd_md5(password)
+        # 校验密码是否一致
         if password == user_dic.get('password'):
             return True,f'用户: [{username}] 登录成功!'
         else:
             return False, '密码错误'
-        return False, '用户不存在,请重新输入!'
+    return False, '用户不存在,请重新输入!'
+
+# 查看余额接口
+def check_balance(username):
+    user_dic = db_handler.select(username)
+    return user_dic['balance']
+
+
+
+
 

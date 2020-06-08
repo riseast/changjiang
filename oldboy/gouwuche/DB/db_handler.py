@@ -30,7 +30,7 @@ def select(username):
             return user_dic
 
 
-#保存数据
+#保存数据 或者更新用户数据字典
 def save(user_dic):
     # 拼接用户的数据字典
     username = user_dic.get('username')
