@@ -72,7 +72,27 @@ def withdraw():
             print(msg)
 
 # 5.还款功能
+@common.login_auth
 def repay():
+    while True:
+        # 让用户输入还款金额
+        input_cash = input('请输入还款金额>>>:').strip()
+        if not input_cash.isdigit():
+            print('请重新输入还款金额')
+            continue
+        # 用户输入的还款金额，将还款金额交给接口层来处理
+        input_cash = int(input_cash)
+        if input_cash > 0:
+            # 调用还款接口
+            flag,msg = bank_interface.paycash_interface(login_user,input_cash)
+            if flag:
+                print(msg)
+                break
+            else:
+                print(msg)
+        else:
+            print('请输入一个大于零的还款金额')
+
     pass
 # 6.转账功能
 def transfer():

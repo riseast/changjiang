@@ -25,3 +25,12 @@ def withdraw_interface(username,money):
         return True,f'用户[{username}] 提现金额[{money}$]成功,手续费为: [{money2 - float(money)}$],余额为: [{balance - money2}$]'
     return False,'提现金额不足，请重新输入!'
 
+def paycash_interface(username,cash):
+
+    #先获取用户字典
+    user_dic = db_handler.select(username)
+    #获取账户中的金
+    user_dic['balance'] += cash
+    #更新账户中的金额
+    db_handler.save(user_dic)
+    return True,f'用户[{username}] 还款金额[{cash}$]成功,余额为: {user_dic["balance"]}$]'
