@@ -30,7 +30,9 @@ def register_interface(username,password,balance):
         # False: 未冻结  True： 已被冻结
         'locaked': False
     }
-    #保存数据
+    # 记录流水
+
+    # 保存数据
     db_handler.save(user_dic)
     return True,f'{username} 注册成功!'
     # 存不是目的，目的是为了更方便的取数据
@@ -75,6 +77,11 @@ def login_interface(username,password):
 def check_balance(username):
     user_dic = db_handler.select(username)
     return user_dic['balance']
+
+def check_flow_interface(username):
+    # user_dic = db_handler.select(username)
+    # return True,f'用户'
+
 
 
 

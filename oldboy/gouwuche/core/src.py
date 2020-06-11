@@ -7,6 +7,8 @@ from conf import settings
 from interface import user_interface
 from lib import common
 from interface import bank_interface
+from DB import db_handler
+
 login_user = None
 # 1.注册功能
 def register():
@@ -17,6 +19,7 @@ def register():
         re_passwd = input("输入正确的密码>>>:").strip()
         #可以输入自定义的金额
         balance = input("请输入要存入银行卡的金额>>>:").strip()
+        balance = int(balance)
         # 小的逻辑处理：比如两次密码是否一致
         if password == re_passwd:
             # 调用接口层的注册接口，将用户名与密码交给接口层来处理
@@ -93,13 +96,30 @@ def repay():
         else:
             print('请输入一个大于零的还款金额')
 
-    pass
 # 6.转账功能
+@common.login_auth
 def transfer():
-    pass
+    while True:
+        out_money = input('请输入您要转账的金额>>>:')
+        to_user = input('请输入您要转入的用户:')
+        if not out_money.isdigit():
+            print('请重新输入')
+            continue
+        out_money = int(out_money)
+        if out_money > 0:
+            flag,msg = bank_interface.transfer_interface(login_user,to_user,out_money)
+            if flag:
+                print(msg)
+                break
+            else:
+                print(msg)
 # 7.查看流水
+@common.login_auth
 def check_flow():
-    pass
+    flow_list = bank_interface.ch
+
+
+
 
 # 8.购物功能
 def shopping():
@@ -143,6 +163,7 @@ def run():
             8. 购物功能
             9. 查看购物车
             10. 管理员功能
+            0. 退出系统
         ===========END=============
         ''')
         choice = input('请输入功能编号:').strip()
@@ -151,3 +172,6 @@ def run():
             print('请输入正确的功能编号!')
             continue
         func_dic.get(choice)()
+
+
+

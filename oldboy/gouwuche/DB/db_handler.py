@@ -39,5 +39,5 @@ def save(user_dic):
     )
 
     with open(user_path,'w',encoding='utf-8')as f:
-        #ensure_ascii=False 让文件中的中文数据，显示中文，默认显示字节
+        # ensure_ascii=False 让文件中的中文数据，显示中文，默认显示字节
         json.dump(user_dic,f,ensure_ascii=False)
